@@ -56,6 +56,7 @@ Plot.plot({
 <br/>
 
 ## Response statistics
+All our individual queries and their response trends.
 
 ```js
 const originalNodes = queries.derive({id: d => d.agent + ', ' + d.agency})
@@ -93,6 +94,7 @@ const data = {
   links: allLinks,
   nodes: allNodes,
 }
+// const colors = {"Form Rejection": "#ed5163", "Personal Rejection": "#edbe51", "No Response": "#e388d8"}
 ```
 
 ```js
@@ -141,7 +143,7 @@ function chart() {
       .attr("y", d => d.y0)
       .attr("height", d => d.y1 - d.y0)
       .attr("width", d => d.x1 - d.x0)
-      .attr("fill", d => "#6a6a95");
+      .attr("fill", "#6a6a95");
 
   // Adds a title on the nodes.
   rect.append("title")
@@ -149,8 +151,9 @@ function chart() {
 
   // Creates the paths that represent the links.
   const link = svg.append("g")
-      .attr("fill", "#7d738c")
-      .attr("stroke-opacity", 0.5)
+      .attr("stroke", "#7d738c")
+      .attr("fill", "none")
+      .attr("stroke-opacity", 0.3)
     .selectAll()
     .data(links)
     .join("g")
@@ -158,21 +161,7 @@ function chart() {
 
   link.append("path")
       .attr("d", d3Sankey.sankeyLinkHorizontal())
-      .attr("stroke-width", d => Math.max(1, d.width));
-  // // Creates a gradient, if necessary, for the source-target color option.
-  // if (linkColor === "source-target") {
-  //   const gradient = link.append("linearGradient")
-  //       //.attr("id", d => (d.uid = DOM.uid("link")).id)
-  //       .attr("gradientUnits", "userSpaceOnUse")
-  //       .attr("x1", d => d.source.x1)
-  //       .attr("x2", d => d.target.x0);
-  //   gradient.append("stop")
-  //       .attr("offset", "0%")
-  //       .attr("stop-color", d => color(d.source.category));
-  //   gradient.append("stop")
-  //       .attr("offset", "100%")
-  //       .attr("stop-color", d => color(d.target.category));
-  // }
+      .attr("stroke-width", d => Math.max(1, d.width))
 
   // link.append("path")
   //     .attr("d", d3.sankeyLinkHorizontal())
